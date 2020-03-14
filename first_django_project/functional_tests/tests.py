@@ -48,7 +48,23 @@ class NewVisitorTest(unittest.TestCase):
         self.fail('finish the test!')#都会失败，生成指定的错误信息，AssertionError:***
 
 
+    def test_can_start_a_list_for_one_user(self):
+        self.ckeck_for_row_in_list_table('2: use peacock feathers to make a fly')
+        self.check_for_row_in_list_table('1: buy peacock feathers')
 
 
-if __name__=='__main__':
-    unittest.main()#启动unittest的测试运行程序
+    def test_multiple_users_can_start_lists_at_different_urls(self):
+        self.browser.get(self.live_server_url)
+        inputbox=self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('buy peacock feathers')
+        inputbox.send_keys(Keys.ENTER)
+        self.check_for_row_in_list_table('1: buy peacock feathers')
+
+        edith_list_url=self.browser.current_url
+        print('now url---',edith_list_url)
+        self.assertRegex(edith_list_url,'/list/.+')
+
+
+
+# if __name__=='__main__':
+#     unittest.main()#启动unittest的测试运行程序

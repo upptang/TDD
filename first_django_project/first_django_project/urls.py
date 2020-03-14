@@ -14,8 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf.urls import url,include
 from django.urls import path
-
+from lists import views
+from lists import urls as list_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^$',views.home_page,name='home_page'),
+    url(r'^lists/',include(list_urls))#include使用一个正则表达式作为URL的前缀，这个前缀会添加到引用的URL前面
 ]
